@@ -1,0 +1,70 @@
+Kubernetes - k8s
+
+https://kubernetes.io/docs/concepts/
+
+Components
+- API server: frontend, the users, command line (interact con el cluster k8s)
+- etcd: key value, guarda todas la data del cluster. Guarda logs para que no haya conflicto entre los masters (framework)
+- Scheduler: distribuir los container en los nodos, los asigna a los nodos
+- Controllers: brain, esta atento de si esta corriendo o no los endpoints. Toma la decision
+- Container runtime: docker 
+- kubelet: agente que corre en el cluster, los containers esta corriendo en los nodos correctamente
+
+Conceptos
+- POD: es la unidad mas pequeña de k8s, un pod puede tener muchos containers corriendo y puede haber muchos PODS en un nodo de k8s. Reglas:
+    - No puedes agregar mas containers a un POD, debes aumentar o disminuir los POD o los Nodos para escalar tu plataforma
+    - Un POD no debería contener mas de un container con la misma imagen
+
+YAML
+- Dictionary: básicamente un objeto con sus descripciones
+- List: listar una lista de strings
+- List of dictionaries: una lista de objetos 
+
+
+Replica Controllers & Replica Set
+- La definición de replica es incluir PODs en otros nodos para balancear las cargas 
+- Replica Controllers: es la version antigua para manejar replicas
+- Replica Set: es la nueva forma recomendada de hacer replicas. Donde este tiene un selector para saber cuales son los PODs que están relacionados a el, y de haber PODs corriendo antes de correr el ReplicaSet este los tome en consideracion
+    - Con Selector Puedes monitorear si los PODs estan corriendo y arreglar los Labels para identificar los PODs
+    - 
+
+
+
+MINIKUBE - KUBECTL COMMANDS
+
+Kubectl (kube command line tool)
+- Obtiene información del cluster
+- Obtiene status de otros nodos de cluster
+
+Deploy una app en el cluster -> Kubectl run hello-minikube
+Ver información del cluster -> Kubectl cluster-info
+Info de los nodos del cluster -> Kubectl get nodes
+
+
+https://kubernetes.io/docs/concepts/workloads/pods/
+
+kubeadm version -> version de kubernetes
+
+minikube - Kubectl commands
+
+minikube start
+
+kubectl apply -f pod.yml 
+kubectl get pods -o wide
+
+kubectl describe pod <name> 
+kubectl delete pod <name>
+
+kubectl run nginx --image=nginx
+
+
+kubectl get replicationcontroller
+kubectl create -f rc-definition.yaml 
+
+
+kubectl get replicaset
+
+Puede utilizar el comando para actualizar las configuraciones de ReplicaSet
+kubectl replace -f <nombre-archivo.yml> 
+kubectl edit -f <nombre-archivo.yml>
+Kubectl describe pod/replicaset <nombre>
