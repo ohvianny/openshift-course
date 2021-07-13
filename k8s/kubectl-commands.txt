@@ -1,0 +1,43 @@
+MINIKUBE
+
+minikube start
+minikube delete 
+minikube service <nombre> --url -> saber en que IP:PORT sirve una app 
+KUBECTL COMMANDS
+
+kubeadm version -> version de kubernetes
+kubectl cluster-info -> Ver información del cluster
+
+#obtener info
+kubectl get all
+kubectl get nodes
+kubectl get pods -o wide
+kubectl get pods | grep -i image
+kubectl get replicaset
+kubectl get replicationcontroller
+kubectl get deployments
+kubectl describe pod <name> 
+kubectl get services
+
+#correr configs
+kubectl create -f <nombre-archivo.yml>
+
+#modificar configs 
+kubectl apply -f <nombre-archivo.yml>
+
+kubectl edit -f <nombre-archivo.yml>
+
+kubectl replace -f <nombre-archivo.yml> 
+
+#eliminar pods 
+kubectl delete pod <name>
+kubectl delete replicaset <name>
+kubectl delete replicationcontroller <name>
+
+#correr un pod 
+kubectl run nginx --image=nginx
+
+#rollback
+kubctl rollout status <nombre>
+kubctl rollout history <nombre>
+kubctl rollout undo deployment/myapp-deployment

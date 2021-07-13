@@ -26,45 +26,26 @@ Replica Controllers & Replica Set
 - Replica Controllers: es la version antigua para manejar replicas
 - Replica Set: es la nueva forma recomendada de hacer replicas. Donde este tiene un selector para saber cuales son los PODs que están relacionados a el, y de haber PODs corriendo antes de correr el ReplicaSet este los tome en consideracion
     - Con Selector Puedes monitorear si los PODs estan corriendo y arreglar los Labels para identificar los PODs
-    - 
 
+Deployments
+- Maneja el ciclo de vida de una aplicacion que sera instalada en ambientes
+- Rollout: es lo primero que se ejecuta cuando se corre un deployment y se llama revision 1, cuando se vuelve
+a ejecutar se llamara revision 2. Se creara una lista historica de revisiones
+- Dos tipos de estrategias:
+  - Recreate: primero se elimina las instancias y luego instala las nuevas. Tiene un problema y es que tiene 
+  un tiempo donde la app esta abajo
+  - Rolling update: estrategia por defecto. Esta estrategia consiste en eliminar una instancia y subir la nueva version, una por una, hasta que todo
+  este actualizado. 
 
+kubctl apply -> roll out
 
-MINIKUBE - KUBECTL COMMANDS
-
-Kubectl (kube command line tool)
-- Obtiene información del cluster
-- Obtiene status de otros nodos de cluster
-
-Deploy una app en el cluster -> Kubectl run hello-minikube
-Ver información del cluster -> Kubectl cluster-info
-Info de los nodos del cluster -> Kubectl get nodes
-
-
-https://kubernetes.io/docs/concepts/workloads/pods/
-
-kubeadm version -> version de kubernetes
-
-minikube - Kubectl commands
-
-minikube start
-
-kubectl apply -f pod.yml 
-kubectl get pods -o wide
-
-kubectl describe pod <name> 
-kubectl delete pod <name>
-
-kubectl run nginx --image=nginx
-
-
-kubectl get replicationcontroller
-kubectl create -f rc-definition.yaml 
-
-
-kubectl get replicaset
-
-Puede utilizar el comando para actualizar las configuraciones de ReplicaSet
-kubectl replace -f <nombre-archivo.yml> 
-kubectl edit -f <nombre-archivo.yml>
-Kubectl describe pod/replicaset <nombre>
+Services:
+- Habilita la comunicacion entre distintas aplicaciones o usuarios, tambien entre distintos NODOS y PODS. Services Types:
+    - NodePort: se encarga de disponibilizar en la red un puerto en especifico para ser mapeado a un POD.
+        - TargetPort: es el puerto del POD a servir
+        - Port: el puerto del servicio
+        - NodePort: es el puerto del nodo. Range: 30000 - 32767
+    - Cluster IP: una IP virtual dentro del cluster para disponibilizar comunicacion entre frontend, backend, redis, etc
+        - Agrupa los PODs para que sea mas facil encontrar los servicios.
+    - LoadBalancer: crea un balanceador para la aplicacion. Cambiar la propiedad de NodePort a LoadBalancer
+- Este servicio puede estar fuera de los nodos, se aplica la regla para todos los PODs de los nodos
